@@ -9,6 +9,28 @@
     <link rel="stylesheet" href="assets/css/index.css">
   </head>
   <body>
+    <audio id="background-audio" src="Sleep Music Delta Waves_ Relaxing Music to Help you Sleep, Deep Sleep, Inner Peace.mp3" autoplay loop></audio>
+    <button id="mute-toggle">Mute</button>
     <div id="root"></div>
+    <script>
+      const audio = document.getElementById('background-audio');
+      const muteButton = document.getElementById('mute-toggle');
+
+      // Attempt to play audio on load, handling potential browser restrictions
+      audio.play().catch(error => {
+        console.log('Autoplay prevented:', error);
+        // Optionally, show a message to the user to interact to enable audio
+      });
+
+      muteButton.addEventListener('click', () => {
+        if (audio.muted) {
+          audio.muted = false;
+          muteButton.textContent = 'Mute';
+        } else {
+          audio.muted = true;
+          muteButton.textContent = 'Unmute';
+        }
+      });
+    </script>
   </body>
 </html>
