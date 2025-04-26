@@ -17,10 +17,31 @@
       const muteButton = document.getElementById('mute-toggle');
 
       // Attempt to play audio on load, handling potential browser restrictions
-      audio.play().catch(error => {
-        console.log('Autoplay prevented:', error);
-        // Optionally, show a message to the user to interact to enable audio
+      // Add click event listener to the document to enable audio on user interaction
+      document.addEventListener('click', () => {
+        audio.play().catch(error => {
+          console.log('Audio playback error:', error);
+        });
       });
+
+      // Show a message prompting user to tap to enable audio
+      const audioPrompt = document.createElement('div');
+      audioPrompt.textContent = 'Tap anywhere to enable audio'; 
+      audioPrompt.style.position = 'fixed';
+      audioPrompt.style.top = '0';
+      audioPrompt.style.left = '0';
+      audioPrompt.style.width = '100%';
+      audioPrompt.style.padding = '10px';
+      audioPrompt.style.backgroundColor = '#000';
+      audioPrompt.style.color = '#fff';
+      audioPrompt.style.textAlign = 'center';
+      audioPrompt.style.zIndex = '1000';
+      document.body.appendChild(audioPrompt);
+
+      // Remove the prompt after first interaction
+      document.addEventListener('click', () => {
+        audioPrompt.remove();
+      }, { once: true });
 
       muteButton.addEventListener('click', () => {
         if (audio.muted) {
